@@ -1,0 +1,14 @@
+parameters:
+    level: 8
+    paths:
+        - src/
+    excludePaths:
+        - tests/
+    bootstrapFiles:
+        - vendor/autoload.php
+    treatPhpDocTypesAsCertain: false
+    reportUnmatchedIgnoredErrors: false
+    checkMissingIterableValueType: false
+    ignoreErrors:
+        - '#Call to an undefined method Cake\\Controller\\Controller::\w+\(\)#'
+        - '#Property .+ does not accept null#'

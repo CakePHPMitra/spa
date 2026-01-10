@@ -1,0 +1,135 @@
+/**
+ * CakeSPA - Default Styles
+ *
+ * Provides basic styling for SPA functionality.
+ * These can be overridden in your application's CSS.
+ */
+
+/* Loading state for buttons and elements */
+.spa-loading {
+    opacity: 0.7;
+    cursor: wait;
+    pointer-events: none;
+}
+
+/* Loading state for content containers */
+[data-spa-content].spa-loading {
+    opacity: 0.6;
+    transition: opacity 0.2s ease;
+}
+
+/* Updating animation for model targets */
+.spa-updating {
+    animation: spa-pulse 0.3s ease;
+}
+
+@keyframes spa-pulse {
+    0% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.5;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+/* Navigation links cursor */
+[data-spa-nav] {
+    cursor: pointer;
+}
+
+/* Form loading indicator */
+form[data-spa-form].spa-loading {
+    position: relative;
+}
+
+form[data-spa-form].spa-loading::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(255, 255, 255, 0.5);
+    cursor: wait;
+}
+
+/* Button loading state */
+button.spa-loading,
+[type="submit"].spa-loading {
+    position: relative;
+    color: transparent;
+}
+
+button.spa-loading::after,
+[type="submit"].spa-loading::after {
+    content: '';
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    top: 50%;
+    left: 50%;
+    margin-left: -8px;
+    margin-top: -8px;
+    border: 2px solid currentColor;
+    border-radius: 50%;
+    border-top-color: transparent;
+    animation: spa-spin 0.8s linear infinite;
+}
+
+@keyframes spa-spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* Disabled state */
+[data-spa-action]:disabled,
+[data-spa-nav]:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+/* Focus styles for accessibility */
+[data-spa-action]:focus,
+[data-spa-nav]:focus {
+    outline: 2px solid currentColor;
+    outline-offset: 2px;
+}
+
+/* Error state */
+.spa-error {
+    border-color: #dc3545 !important;
+    animation: spa-shake 0.5s ease;
+}
+
+@keyframes spa-shake {
+    0%, 100% {
+        transform: translateX(0);
+    }
+    25% {
+        transform: translateX(-5px);
+    }
+    75% {
+        transform: translateX(5px);
+    }
+}
+
+/* Success feedback */
+.spa-success {
+    animation: spa-success-flash 0.5s ease;
+}
+
+@keyframes spa-success-flash {
+    0% {
+        background-color: inherit;
+    }
+    50% {
+        background-color: rgba(40, 167, 69, 0.2);
+    }
+    100% {
+        background-color: inherit;
+    }
+}
