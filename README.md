@@ -130,11 +130,11 @@ class CounterController extends AppController
 
 ## Documentation
 
+See the [docs](docs/) folder for detailed documentation:
+
 - [Installation Guide](docs/installation.md)
-- [Configuration](docs/configuration.md)
-- [Usage Guide](docs/usage.md)
-- [Security](docs/security.md)
-- [Examples](docs/examples.md)
+- [Features](docs/features/) - Usage and examples
+- [Development](docs/development/) - Configuration and security
 
 ## How It Works
 

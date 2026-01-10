@@ -55,11 +55,16 @@ That's it! Clicking the button updates the like count without any page reload.
 
 ## Documentation Sections
 
+### Getting Started
 - [Installation](installation.md) - Getting started
-- [Configuration](configuration.md) - Customizing behavior
-- [Usage Guide](usage.md) - Complete feature guide
-- [Security](security.md) - Security best practices
-- [Examples](examples.md) - Real-world examples
+
+### Features
+- [Usage Guide](features/usage.md) - Complete feature guide
+- [Examples](features/examples.md) - Real-world examples
+
+### Development
+- [Configuration](development/configuration.md) - Customizing behavior
+- [Security](development/security.md) - Security best practices
 
 ## Migration from CakeLive
 

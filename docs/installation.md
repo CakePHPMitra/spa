@@ -126,6 +126,6 @@ If clicking the button updates the count without a page reload, the installation
 
 ## Next Steps
 
-- [Configuration](configuration.md) - Customize CakeSPA settings
-- [Usage Guide](usage.md) - Learn how to use CakeSPA features
-- [Examples](examples.md) - See complete examples
+- [Configuration](development/configuration.md) - Customize CakeSPA settings
+- [Usage Guide](features/usage.md) - Learn how to use CakeSPA features
+- [Examples](features/examples.md) - See complete examples
