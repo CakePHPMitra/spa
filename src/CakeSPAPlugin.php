@@ -14,7 +14,7 @@ use CakeSPA\Middleware\SpaMiddleware;
  * Server-driven SPA architecture for CakePHP 5.
  * Provides Livewire-like reactivity without JavaScript frameworks.
  */
-class Plugin extends BasePlugin
+class CakeSPAPlugin extends BasePlugin
 {
     /**
      * Plugin name.
