@@ -2,11 +2,11 @@
 
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 [![CakePHP](https://img.shields.io/badge/CakePHP-5.x-red.svg)](https://cakephp.org)
-[![GitHub](https://img.shields.io/github/stars/mahankals/cakephp-spa?style=social)](https://github.com/mahankals/cakephp-spa)
+[![GitHub](https://img.shields.io/github/stars/CakePHPMitra/spa?style=social)](https://github.com/CakePHPMitra/spa)
 
 Server-driven SPA architecture for CakePHP 5. Build reactive, single-page applications without JavaScript frameworks.
 
-Based on [CakePHP Plugin Template](https://github.com/mahankals/CakePHP-Plugin-Template).
+Based on [CakePHP Plugin Template](https://github.com/CakePHPMitra/CakePHP-Plugin-Template).
 
 ## Features
 
@@ -32,7 +32,7 @@ You can install this plugin directly from GitHub using Composer:
    "repositories": [
        {
            "type": "vcs",
-           "url": "https://github.com/mahankals/cakephp-spa"
+           "url": "https://github.com/CakePHPMitra/spa"
        }
    ]
    ```
@@ -40,7 +40,7 @@ You can install this plugin directly from GitHub using Composer:
 2. Require the plugin via Composer:
 
    ```bash
-   composer require mahankals/cakephp-spa:dev-master
+   composer require cakephpmitra/spa:dev-master
    ```
 
 3. Load the plugin:
@@ -160,10 +160,11 @@ If you're migrating from the original CakeLive implementation:
 
 ## Contributing
 
-Contributions are welcome! Please read our contributing guidelines before submitting PRs.
+See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
 
-- [GitHub Repository](https://github.com/mahankals/cakephp-spa)
-- [Issue Tracker](https://github.com/mahankals/cakephp-spa/issues)
+## Issues
+
+Report bugs and feature requests on the [Issue Tracker](https://github.com/CakePHPMitra/spa/issues).
 
 ## Author
 
