@@ -152,7 +152,16 @@ class SpaHelper extends Helper
      * @param string $model Model name (key in JSON response).
      * @param mixed $value Initial value.
      * @param array<string, mixed> $options Options array.
+     *   - `tag`: HTML tag to use (default: 'span')
+     *   - `escape`: Whether to escape the value (default: true)
+     *   - `html`: SECURITY WARNING - Set to true to allow raw HTML rendering.
+     *             Only use with trusted, sanitized content. Never use with user input.
      * @return string HTML element.
+     *
+     * SECURITY: The 'html' option disables XSS protection. Only use when:
+     * - Content is generated server-side and fully trusted
+     * - Content has been sanitized with HTMLPurifier or similar
+     * - Never use with any user-provided content
      */
     public function target(string $model, $value = '', array $options = []): string
     {
@@ -168,10 +177,19 @@ class SpaHelper extends Helper
         ];
 
         // Handle unsafe HTML option
+        // SECURITY: This bypasses XSS protection - use only with trusted content
         if (isset($options['html']) && $options['html'] === true) {
             $defaults[$prefix . '-unsafe-html'] = 'true';
             $escape = false;
             unset($options['html']);
+
+            // Log warning in debug mode to help developers identify unsafe usage
+            if (\Cake\Core\Configure::read('debug')) {
+                \Cake\Log\Log::warning(
+                    "SpaHelper::target() called with html=true for model '{$model}'. " .
+                    "Ensure content is sanitized to prevent XSS."
+                );
+            }
         }
 
         $attributes = array_merge($defaults, $options);

@@ -1,5 +1,5 @@
 {
-    "name": "mahankals/cakephp-spa",
+    "name": "CakePHPMitra/spa",
     "description": "Server-driven SPA architecture for CakePHP 5 - Livewire-like reactivity without JavaScript frameworks",
     "type": "cakephp-plugin",
     "keywords": [
@@ -10,18 +10,18 @@
         "reactive",
         "partial-rendering"
     ],
-    "homepage": "https://github.com/mahankals/cakephp-spa",
+    "homepage": "https://github.com/CakePHPMitra/spa",
     "license": "MIT",
     "authors": [
         {
             "name": "Atul Mahankal",
             "email": "atulmahankal@gmail.com",
-            "homepage": "https://github.com/mahankals"
+            "homepage": "https://github.com/CakePHPMitra"
         }
     ],
     "support": {
-        "issues": "https://github.com/mahankals/cakephp-spa/issues",
-        "source": "https://github.com/mahankals/cakephp-spa"
+        "issues": "https://github.com/CakePHPMitra/spa/issues",
+        "source": "https://github.com/CakePHPMitra/spa"
     },
     "require": {
         "php": ">=8.1",

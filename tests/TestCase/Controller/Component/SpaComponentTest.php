@@ -5,7 +5,6 @@ namespace CakeSPA\Test\TestCase\Controller\Component;
 
 use Cake\Controller\ComponentRegistry;
 use Cake\Controller\Controller;
-use Cake\Http\Response;
 use Cake\Http\ServerRequest;
 use Cake\TestSuite\TestCase;
 use CakeSPA\Controller\Component\SpaComponent;
@@ -33,8 +32,7 @@ class SpaComponentTest extends TestCase
         parent::setUp();
 
         $request = new ServerRequest();
-        $response = new Response();
-        $this->controller = new Controller($request, $response);
+        $this->controller = new Controller($request);
         $registry = new ComponentRegistry($this->controller);
         $this->component = new SpaComponent($registry);
     }
@@ -59,7 +57,7 @@ class SpaComponentTest extends TestCase
                 'HTTP_X_LIVE_NAV' => 'true',
             ],
         ]);
-        $this->controller = new Controller($request, new Response());
+        $this->controller = new Controller($request);
         $registry = new ComponentRegistry($this->controller);
         $this->component = new SpaComponent($registry);
 
@@ -77,7 +75,7 @@ class SpaComponentTest extends TestCase
     {
         // Arrange
         $request = (new ServerRequest())->withAttribute('spa.isNavigation', true);
-        $this->controller = new Controller($request, new Response());
+        $this->controller = new Controller($request);
         $registry = new ComponentRegistry($this->controller);
         $this->component = new SpaComponent($registry);
 
@@ -112,7 +110,7 @@ class SpaComponentTest extends TestCase
                 'HTTP_X_REQUESTED_WITH' => 'XMLHttpRequest',
             ],
         ]);
-        $this->controller = new Controller($request, new Response());
+        $this->controller = new Controller($request);
         $registry = new ComponentRegistry($this->controller);
         $this->component = new SpaComponent($registry);
 
@@ -134,7 +132,7 @@ class SpaComponentTest extends TestCase
                 'HTTP_X_REQUESTED_WITH' => 'XMLHttpRequest',
             ],
         ]);
-        $this->controller = new Controller($request, new Response());
+        $this->controller = new Controller($request);
         $registry = new ComponentRegistry($this->controller);
         $this->component = new SpaComponent($registry);
 
@@ -156,7 +154,7 @@ class SpaComponentTest extends TestCase
                 'HTTP_X_LIVE_NAV' => 'true',
             ],
         ]);
-        $this->controller = new Controller($request, new Response());
+        $this->controller = new Controller($request);
         $registry = new ComponentRegistry($this->controller);
         $this->component = new SpaComponent($registry);
 
@@ -178,7 +176,7 @@ class SpaComponentTest extends TestCase
                 'HTTP_X_REQUESTED_WITH' => 'XMLHttpRequest',
             ],
         ]);
-        $this->controller = new Controller($request, new Response());
+        $this->controller = new Controller($request);
         $registry = new ComponentRegistry($this->controller);
         $this->component = new SpaComponent($registry);
 
@@ -228,7 +226,7 @@ class SpaComponentTest extends TestCase
                 'HTTP_X_REQUESTED_WITH' => 'XMLHttpRequest',
             ],
         ]);
-        $this->controller = new Controller($request, new Response());
+        $this->controller = new Controller($request);
         $registry = new ComponentRegistry($this->controller);
         $this->component = new SpaComponent($registry);
 
@@ -252,7 +250,7 @@ class SpaComponentTest extends TestCase
                 'HTTP_X_REQUESTED_WITH' => 'XMLHttpRequest',
             ],
         ]);
-        $this->controller = new Controller($request, new Response());
+        $this->controller = new Controller($request);
         $registry = new ComponentRegistry($this->controller);
         $this->component = new SpaComponent($registry);
 
