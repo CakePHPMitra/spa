@@ -1,5 +1,5 @@
 {
-    "name": "CakePHPMitra/spa",
+    "name": "cakephpmitra/spa",
     "description": "Server-driven SPA architecture for CakePHP 5 - Livewire-like reactivity without JavaScript frameworks",
     "type": "cakephp-plugin",
     "keywords": [
