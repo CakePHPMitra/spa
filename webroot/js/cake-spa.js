@@ -37,7 +37,7 @@
          */
         constructor(config = {}) {
             this.config = { ...DEFAULT_CONFIG, ...config };
-            this.baseUrl = window.location.origin + '/';
+            this.baseUrl = this.detectBaseUrl();
             this.csrfToken = null;
             this.loadingElements = new Set();
             this.debounceTimers = new Map();
@@ -76,6 +76,69 @@
             if (this.config.debug) {
                 console.log('[CakeSPA]', ...args);
             }
+        }
+
+        /**
+         * Detect base URL for subdirectory/alias deployments
+         * Priority: 1) <base> tag, 2) meta[name="base-url"], 3) script src, 4) origin
+         * @returns {string} Base URL with trailing slash
+         */
+        detectBaseUrl() {
+            let baseUrl = null;
+
+            // 1. Check for <base> tag (CakePHP best practice)
+            const baseTag = document.querySelector('base[href]');
+            if (baseTag && baseTag.href) {
+                baseUrl = baseTag.href;
+                this.log('Base URL from <base> tag:', baseUrl);
+            }
+
+            // 2. Check for meta tag
+            if (!baseUrl) {
+                const metaBase = document.querySelector('meta[name="base-url"]');
+                if (metaBase) {
+                    const content = metaBase.getAttribute('content');
+                    if (content) {
+                        // Handle relative or absolute URLs
+                        baseUrl = content.startsWith('http')
+                            ? content
+                            : window.location.origin + content;
+                        this.log('Base URL from meta tag:', baseUrl);
+                    }
+                }
+            }
+
+            // 3. Auto-detect from cake-spa.js script src
+            if (!baseUrl) {
+                const scripts = document.querySelectorAll('script[src]');
+                for (const script of scripts) {
+                    const src = script.src;
+                    // Match: /cakephp/cake_s_p_a/js/cake-spa.js or similar patterns
+                    if (src.includes('cake-spa') || src.includes('cake_s_p_a')) {
+                        try {
+                            const url = new URL(src);
+                            // Extract path before cake_s_p_a or cake-spa
+                            const match = url.pathname.match(/^(.*?)cake[_-]?s[_-]?p[_-]?a/i);
+                            if (match) {
+                                baseUrl = url.origin + match[1];
+                                this.log('Base URL from script src:', baseUrl);
+                                break;
+                            }
+                        } catch (e) {
+                            // Invalid URL, skip
+                        }
+                    }
+                }
+            }
+
+            // 4. Fallback to origin
+            if (!baseUrl) {
+                baseUrl = window.location.origin + '/';
+                this.log('Base URL fallback to origin:', baseUrl);
+            }
+
+            // Ensure trailing slash
+            return baseUrl.endsWith('/') ? baseUrl : baseUrl + '/';
         }
 
         /**
