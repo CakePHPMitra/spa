@@ -80,31 +80,28 @@
 
         /**
          * Detect base URL for subdirectory/alias deployments
-         * Priority: 1) <base> tag, 2) meta[name="base-url"], 3) script src, 4) origin
+         * Priority: 1) meta[name="base-url"] (server-generated), 2) <base> tag, 3) script src, 4) origin
          * @returns {string} Base URL with trailing slash
          */
         detectBaseUrl() {
             let baseUrl = null;
 
-            // 1. Check for <base> tag (CakePHP best practice)
-            const baseTag = document.querySelector('base[href]');
-            if (baseTag && baseTag.href) {
-                baseUrl = baseTag.href;
-                this.log('Base URL from <base> tag:', baseUrl);
+            // 1. Check for meta tag (recommended - set by SpaHelper::baseUrlMeta())
+            const metaBase = document.querySelector('meta[name="base-url"]');
+            if (metaBase) {
+                const content = metaBase.getAttribute('content');
+                if (content) {
+                    baseUrl = content;
+                    this.log('Base URL from meta tag:', baseUrl);
+                }
             }
 
-            // 2. Check for meta tag
+            // 2. Check for <base> tag
             if (!baseUrl) {
-                const metaBase = document.querySelector('meta[name="base-url"]');
-                if (metaBase) {
-                    const content = metaBase.getAttribute('content');
-                    if (content) {
-                        // Handle relative or absolute URLs
-                        baseUrl = content.startsWith('http')
-                            ? content
-                            : window.location.origin + content;
-                        this.log('Base URL from meta tag:', baseUrl);
-                    }
+                const baseTag = document.querySelector('base[href]');
+                if (baseTag && baseTag.href) {
+                    baseUrl = baseTag.href;
+                    this.log('Base URL from <base> tag:', baseUrl);
                 }
             }
 
@@ -139,6 +136,34 @@
 
             // Ensure trailing slash
             return baseUrl.endsWith('/') ? baseUrl : baseUrl + '/';
+        }
+
+        /**
+         * Build full URL with base path
+         * @param {string} url - Relative or absolute URL
+         * @returns {string} Full URL with base path
+         */
+        buildFullUrl(url) {
+            if (url.startsWith('http')) {
+                return url;
+            }
+            // Remove leading slash and append to base URL
+            return this.baseUrl + url.replace(/^\//, '');
+        }
+
+        /**
+         * Get pathname with base path for history
+         * @param {string} url - Relative or absolute URL
+         * @returns {string} Pathname with base path
+         */
+        getHistoryPath(url) {
+            if (url.startsWith('http')) {
+                return new URL(url).pathname;
+            }
+            // Get base path from baseUrl
+            const basePath = this.baseUrl.replace(window.location.origin, '');
+            // Combine base path with url, ensuring proper slashes
+            return (basePath + url.replace(/^\//, '')).replace(/\/+/g, '/');
         }
 
         /**
@@ -394,7 +419,8 @@
             container.classList.add(this.config.loadingClass);
 
             try {
-                const fullUrl = url.startsWith('http') ? url : this.baseUrl + url.replace(/^\//, '');
+                const fullUrl = this.buildFullUrl(url);
+                const historyUrl = this.getHistoryPath(url);
 
                 const response = await fetch(fullUrl, {
                     headers: {
@@ -412,7 +438,7 @@
                 container.innerHTML = html;
 
                 if (pushState) {
-                    window.history.pushState({ spa: true }, '', url);
+                    window.history.pushState({ spa: true }, '', historyUrl);
                 }
 
                 // Re-extract CSRF token from new content

@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace CakeSPA\View\Helper;
 
 use Cake\Core\Configure;
+use Cake\Routing\Router;
 use Cake\View\Helper;
 
 /**
@@ -133,7 +134,9 @@ class SpaHelper extends Helper
     public function navLink(string $label, $url, array $options = []): string
     {
         $prefix = $this->getConfig('attributePrefix');
-        $href = is_array($url) ? $this->Url->build($url) : $url;
+
+        // Always use Url helper to ensure proper base path handling
+        $href = $this->Url->build($url);
 
         $defaults = [
             'href' => $href,
@@ -296,6 +299,36 @@ class SpaHelper extends Helper
         }
 
         return sprintf('<meta name="csrf-token" content="%s">', h($token));
+    }
+
+    /**
+     * Generate base URL meta tag for JavaScript to use.
+     *
+     * This enables proper URL handling when app is deployed under subdirectory/alias.
+     * The JavaScript will use this base URL for AJAX requests and SPA navigation.
+     *
+     * @return string HTML meta tag.
+     */
+    public function baseUrlMeta(): string
+    {
+        $baseUrl = Router::url('/', true);
+
+        return sprintf('<meta name="base-url" content="%s">', h($baseUrl));
+    }
+
+    /**
+     * Generate all required meta tags (CSRF + base URL).
+     *
+     * Recommended to include in layout <head> section:
+     * ```php
+     * <?= $this->Spa->meta() ?>
+     * ```
+     *
+     * @return string HTML meta tags.
+     */
+    public function meta(): string
+    {
+        return $this->csrfMeta() . "\n" . $this->baseUrlMeta();
     }
 
     /**

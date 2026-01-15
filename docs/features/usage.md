@@ -89,19 +89,41 @@ Wrap your main content for SPA navigation:
 ]) ?>
 ```
 
-### Scripts and CSRF
+### Scripts and Meta Tags
 
-Include required assets:
+Include required assets and meta tags:
 
 ```php
-// In <head>
-<?= $this->Spa->csrfMeta() ?>
+// In <head> - recommended approach
+<?= $this->Spa->meta() ?>
 <?= $this->Spa->scripts() ?>
+```
 
-// Or separately
+The `meta()` method outputs both CSRF token and base URL meta tags:
+
+```html
+<meta name="csrf-token" content="...">
+<meta name="base-url" content="https://example.com/myapp/">
+```
+
+**Individual methods:**
+
+```php
+<?= $this->Spa->csrfMeta() ?>    <!-- CSRF token only -->
+<?= $this->Spa->baseUrlMeta() ?> <!-- Base URL only -->
 <?= $this->Spa->scripts(['css' => false]) ?> <!-- JS only -->
 <?= $this->Spa->scripts(['js' => false]) ?>  <!-- CSS only -->
 ```
+
+### Subdirectory Deployments
+
+When deploying under a subdirectory/alias (e.g., `/myapp/`), the base URL meta tag ensures all AJAX requests and SPA navigation use the correct path.
+
+The JavaScript detects base URL using this priority:
+1. `<meta name="base-url">` (server-generated, recommended)
+2. `<base href>` tag
+3. Script src auto-detection
+4. Window origin fallback
 
 ## Component Methods
 

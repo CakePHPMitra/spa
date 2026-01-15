@@ -8,6 +8,21 @@ This project adheres to [Semantic Versioning](https://semver.org/).
 ## [Unreleased]
 
 ### Added
+- `baseUrlMeta()` helper method for generating base URL meta tag
+- `meta()` helper method combining CSRF and base URL meta tags
+- Subdirectory/alias deployment support with automatic base URL detection
+- JavaScript `detectBaseUrl()` with fallback chain (meta tag → base tag → script src → origin)
+- JavaScript `buildFullUrl()` and `getHistoryPath()` helper methods for consistent URL handling
+
+### Changed
+- `navLink()` now uses `Url->build()` for proper base path handling
+- `loadPage()` and `request()` now use base URL for AJAX calls and history
+
+---
+
+## [1.0.0] - 2025-01-15
+
+### Added
 - Initial release of CakeSPA plugin for CakePHP 5
 - `SpaComponent` for handling AJAX requests and JSON responses
 - `SpaHelper` with reactive UI elements:

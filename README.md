@@ -81,7 +81,7 @@ public function initialize(): void
 <!DOCTYPE html>
 <html>
 <head>
-    <?= $this->Spa->csrfMeta() ?>
+    <?= $this->Spa->meta() ?>
     <?= $this->Spa->scripts() ?>
 </head>
 <body>
@@ -135,6 +135,25 @@ See the [docs](docs/) folder for detailed documentation:
 - [Installation Guide](docs/installation.md)
 - [Features](docs/features/) - Usage and examples
 - [Development](docs/development/) - Configuration and security
+
+## Subdirectory Deployments
+
+When deploying your CakePHP app under a subdirectory/alias (e.g., `https://example.com/myapp/`), CakeSPA automatically handles URL resolution.
+
+Include `meta()` in your layout's `<head>` section:
+
+```php
+<?= $this->Spa->meta() ?>
+```
+
+This generates both CSRF and base URL meta tags. The JavaScript automatically detects the base URL using a fallback chain:
+
+1. `<meta name="base-url">` (recommended - server-generated)
+2. `<base href>` tag
+3. Script src detection
+4. Origin fallback
+
+**No additional configuration required** - navigation links and AJAX requests automatically use the correct base path.
 
 ## How It Works
 
